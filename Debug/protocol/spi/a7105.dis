@@ -1,0 +1,386 @@
+
+a7105.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.CS_HI:
+
+00000000 <CS_HI>:
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <CS_HI+0x18>)
+   6:	6a1a      	ldr	r2, [r3, #32]
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <CS_HI+0x18>)
+   a:	8c9b      	ldrh	r3, [r3, #36]	; 0x24
+   c:	4610      	mov	r0, r2
+   e:	4619      	mov	r1, r3
+  10:	f7ff fffe 	bl	0 <gpio_set>
+  14:	bd80      	pop	{r7, pc}
+  16:	bf00      	nop
+  18:	00000000 	.word	0x00000000
+
+Disassembly of section .text.CS_LO:
+
+00000000 <CS_LO>:
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <CS_LO+0x18>)
+   6:	6a1a      	ldr	r2, [r3, #32]
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <CS_LO+0x18>)
+   a:	8c9b      	ldrh	r3, [r3, #36]	; 0x24
+   c:	4610      	mov	r0, r2
+   e:	4619      	mov	r1, r3
+  10:	f7ff fffe 	bl	0 <gpio_clear>
+  14:	bd80      	pop	{r7, pc}
+  16:	bf00      	nop
+  18:	00000000 	.word	0x00000000
+
+Disassembly of section .text.A7105_WriteReg:
+
+00000000 <A7105_WriteReg>:
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+   e:	f7ff fffe 	bl	0 <A7105_WriteReg>
+  12:	79fb      	ldrb	r3, [r7, #7]
+  14:	b29b      	uxth	r3, r3
+  16:	4807      	ldr	r0, [pc, #28]	; (34 <A7105_WriteReg+0x34>)
+  18:	4619      	mov	r1, r3
+  1a:	f7ff fffe 	bl	0 <spi_xfer>
+  1e:	79bb      	ldrb	r3, [r7, #6]
+  20:	b29b      	uxth	r3, r3
+  22:	4804      	ldr	r0, [pc, #16]	; (34 <A7105_WriteReg+0x34>)
+  24:	4619      	mov	r1, r3
+  26:	f7ff fffe 	bl	0 <spi_xfer>
+  2a:	f7ff fffe 	bl	0 <A7105_WriteReg>
+  2e:	3708      	adds	r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+  34:	40003800 	.word	0x40003800
+
+Disassembly of section .text.A7105_ReadReg:
+
+00000000 <A7105_ReadReg>:
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+   a:	f7ff fffe 	bl	0 <A7105_ReadReg>
+   e:	79fb      	ldrb	r3, [r7, #7]
+  10:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+  14:	b2db      	uxtb	r3, r3
+  16:	4807      	ldr	r0, [pc, #28]	; (34 <A7105_ReadReg+0x34>)
+  18:	4619      	mov	r1, r3
+  1a:	f7ff fffe 	bl	0 <spi_xfer>
+  1e:	f7ff fffe 	bl	0 <PROTOSPI_read3wire>
+  22:	4603      	mov	r3, r0
+  24:	73fb      	strb	r3, [r7, #15]
+  26:	f7ff fffe 	bl	0 <A7105_ReadReg>
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+  2c:	4618      	mov	r0, r3
+  2e:	3710      	adds	r7, #16
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+  34:	40003800 	.word	0x40003800
+
+Disassembly of section .text.A7105_WriteData:
+
+00000000 <A7105_WriteData>:
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	70fa      	strb	r2, [r7, #3]
+   e:	70bb      	strb	r3, [r7, #2]
+  10:	f7ff fffe 	bl	0 <A7105_WriteData>
+  14:	4815      	ldr	r0, [pc, #84]	; (6c <A7105_WriteData+0x6c>)
+  16:	21e0      	movs	r1, #224	; 0xe0
+  18:	f7ff fffe 	bl	0 <spi_xfer>
+  1c:	4813      	ldr	r0, [pc, #76]	; (6c <A7105_WriteData+0x6c>)
+  1e:	2105      	movs	r1, #5
+  20:	f7ff fffe 	bl	0 <spi_xfer>
+  24:	2300      	movs	r3, #0
+  26:	60fb      	str	r3, [r7, #12]
+  28:	e00a      	b.n	40 <A7105_WriteData+0x40>
+  2a:	68fb      	ldr	r3, [r7, #12]
+  2c:	687a      	ldr	r2, [r7, #4]
+  2e:	4413      	add	r3, r2
+  30:	781b      	ldrb	r3, [r3, #0]
+  32:	480e      	ldr	r0, [pc, #56]	; (6c <A7105_WriteData+0x6c>)
+  34:	4619      	mov	r1, r3
+  36:	f7ff fffe 	bl	0 <spi_xfer>
+  3a:	68fb      	ldr	r3, [r7, #12]
+  3c:	3301      	adds	r3, #1
+  3e:	60fb      	str	r3, [r7, #12]
+  40:	78fa      	ldrb	r2, [r7, #3]
+  42:	68fb      	ldr	r3, [r7, #12]
+  44:	429a      	cmp	r2, r3
+  46:	dcf0      	bgt.n	2a <A7105_WriteData+0x2a>
+  48:	f7ff fffe 	bl	0 <A7105_WriteData>
+  4c:	78bb      	ldrb	r3, [r7, #2]
+  4e:	200f      	movs	r0, #15
+  50:	4619      	mov	r1, r3
+  52:	f7ff fffe 	bl	0 <A7105_WriteData>
+  56:	f7ff fffe 	bl	0 <A7105_WriteData>
+  5a:	4804      	ldr	r0, [pc, #16]	; (6c <A7105_WriteData+0x6c>)
+  5c:	21d0      	movs	r1, #208	; 0xd0
+  5e:	f7ff fffe 	bl	0 <spi_xfer>
+  62:	f7ff fffe 	bl	0 <A7105_WriteData>
+  66:	3710      	adds	r7, #16
+  68:	46bd      	mov	sp, r7
+  6a:	bd80      	pop	{r7, pc}
+  6c:	40003800 	.word	0x40003800
+
+Disassembly of section .text.A7105_ReadData:
+
+00000000 <A7105_ReadData>:
+   0:	b590      	push	{r4, r7, lr}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+   c:	20f0      	movs	r0, #240	; 0xf0
+   e:	f7ff fffe 	bl	0 <A7105_ReadData>
+  12:	2300      	movs	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+  16:	e00a      	b.n	2e <A7105_ReadData+0x2e>
+  18:	68fb      	ldr	r3, [r7, #12]
+  1a:	687a      	ldr	r2, [r7, #4]
+  1c:	18d4      	adds	r4, r2, r3
+  1e:	2005      	movs	r0, #5
+  20:	f7ff fffe 	bl	0 <A7105_ReadData>
+  24:	4603      	mov	r3, r0
+  26:	7023      	strb	r3, [r4, #0]
+  28:	68fb      	ldr	r3, [r7, #12]
+  2a:	3301      	adds	r3, #1
+  2c:	60fb      	str	r3, [r7, #12]
+  2e:	78fa      	ldrb	r2, [r7, #3]
+  30:	68fb      	ldr	r3, [r7, #12]
+  32:	429a      	cmp	r2, r3
+  34:	dcf0      	bgt.n	18 <A7105_ReadData+0x18>
+  36:	bf00      	nop
+  38:	3714      	adds	r7, #20
+  3a:	46bd      	mov	sp, r7
+  3c:	bd90      	pop	{r4, r7, pc}
+  3e:	bf00      	nop
+
+Disassembly of section .text.A7105_SetTxRxMode:
+
+00000000 <A7105_SetTxRxMode>:
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b01      	cmp	r3, #1
+   e:	d108      	bne.n	22 <A7105_SetTxRxMode+0x22>
+  10:	200b      	movs	r0, #11
+  12:	2133      	movs	r1, #51	; 0x33
+  14:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  18:	200c      	movs	r0, #12
+  1a:	2131      	movs	r1, #49	; 0x31
+  1c:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  20:	e013      	b.n	4a <A7105_SetTxRxMode+0x4a>
+  22:	79fb      	ldrb	r3, [r7, #7]
+  24:	2b02      	cmp	r3, #2
+  26:	d108      	bne.n	3a <A7105_SetTxRxMode+0x3a>
+  28:	200b      	movs	r0, #11
+  2a:	2131      	movs	r1, #49	; 0x31
+  2c:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  30:	200c      	movs	r0, #12
+  32:	2133      	movs	r1, #51	; 0x33
+  34:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  38:	e007      	b.n	4a <A7105_SetTxRxMode+0x4a>
+  3a:	200b      	movs	r0, #11
+  3c:	2133      	movs	r1, #51	; 0x33
+  3e:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  42:	200c      	movs	r0, #12
+  44:	2133      	movs	r1, #51	; 0x33
+  46:	f7ff fffe 	bl	0 <A7105_SetTxRxMode>
+  4a:	3708      	adds	r7, #8
+  4c:	46bd      	mov	sp, r7
+  4e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.A7105_Reset:
+
+00000000 <A7105_Reset>:
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	2000      	movs	r0, #0
+   8:	2100      	movs	r1, #0
+   a:	f7ff fffe 	bl	0 <A7105_Reset>
+   e:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+  12:	f7ff fffe 	bl	0 <_usleep>
+  16:	2000      	movs	r0, #0
+  18:	f7ff fffe 	bl	0 <A7105_Reset>
+  1c:	2010      	movs	r0, #16
+  1e:	f7ff fffe 	bl	0 <A7105_Reset>
+  22:	4603      	mov	r3, r0
+  24:	2b9e      	cmp	r3, #158	; 0x9e
+  26:	bf14      	ite	ne
+  28:	2300      	movne	r3, #0
+  2a:	2301      	moveq	r3, #1
+  2c:	b2db      	uxtb	r3, r3
+  2e:	607b      	str	r3, [r7, #4]
+  30:	20a0      	movs	r0, #160	; 0xa0
+  32:	f7ff fffe 	bl	0 <A7105_Reset>
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	4618      	mov	r0, r3
+  3a:	3708      	adds	r7, #8
+  3c:	46bd      	mov	sp, r7
+  3e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.A7105_WriteID:
+
+00000000 <A7105_WriteID>:
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	f7ff fffe 	bl	0 <A7105_WriteID>
+   c:	4814      	ldr	r0, [pc, #80]	; (60 <A7105_WriteID+0x60>)
+   e:	2106      	movs	r1, #6
+  10:	f7ff fffe 	bl	0 <spi_xfer>
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	0e1b      	lsrs	r3, r3, #24
+  18:	b29b      	uxth	r3, r3
+  1a:	4811      	ldr	r0, [pc, #68]	; (60 <A7105_WriteID+0x60>)
+  1c:	4619      	mov	r1, r3
+  1e:	f7ff fffe 	bl	0 <spi_xfer>
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	0c1b      	lsrs	r3, r3, #16
+  26:	b29b      	uxth	r3, r3
+  28:	b2db      	uxtb	r3, r3
+  2a:	b29b      	uxth	r3, r3
+  2c:	480c      	ldr	r0, [pc, #48]	; (60 <A7105_WriteID+0x60>)
+  2e:	4619      	mov	r1, r3
+  30:	f7ff fffe 	bl	0 <spi_xfer>
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	0a1b      	lsrs	r3, r3, #8
+  38:	b29b      	uxth	r3, r3
+  3a:	b2db      	uxtb	r3, r3
+  3c:	b29b      	uxth	r3, r3
+  3e:	4808      	ldr	r0, [pc, #32]	; (60 <A7105_WriteID+0x60>)
+  40:	4619      	mov	r1, r3
+  42:	f7ff fffe 	bl	0 <spi_xfer>
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	b29b      	uxth	r3, r3
+  4a:	b2db      	uxtb	r3, r3
+  4c:	b29b      	uxth	r3, r3
+  4e:	4804      	ldr	r0, [pc, #16]	; (60 <A7105_WriteID+0x60>)
+  50:	4619      	mov	r1, r3
+  52:	f7ff fffe 	bl	0 <spi_xfer>
+  56:	f7ff fffe 	bl	0 <A7105_WriteID>
+  5a:	3708      	adds	r7, #8
+  5c:	46bd      	mov	sp, r7
+  5e:	bd80      	pop	{r7, pc}
+  60:	40003800 	.word	0x40003800
+
+Disassembly of section .text.A7105_SetPower:
+
+00000000 <A7105_SetPower>:
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	2b07      	cmp	r3, #7
+   c:	d83a      	bhi.n	84 <A7105_SetPower+0x84>
+   e:	a201      	add	r2, pc, #4	; (adr r2, 14 <A7105_SetPower+0x14>)
+  10:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  14:	00000035 	.word	0x00000035
+  18:	0000003f 	.word	0x0000003f
+  1c:	00000049 	.word	0x00000049
+  20:	00000053 	.word	0x00000053
+  24:	0000005d 	.word	0x0000005d
+  28:	00000067 	.word	0x00000067
+  2c:	00000071 	.word	0x00000071
+  30:	0000007b 	.word	0x0000007b
+  34:	2300      	movs	r3, #0
+  36:	73fb      	strb	r3, [r7, #15]
+  38:	2300      	movs	r3, #0
+  3a:	73bb      	strb	r3, [r7, #14]
+  3c:	e027      	b.n	8e <A7105_SetPower+0x8e>
+  3e:	2300      	movs	r3, #0
+  40:	73fb      	strb	r3, [r7, #15]
+  42:	2301      	movs	r3, #1
+  44:	73bb      	strb	r3, [r7, #14]
+  46:	e022      	b.n	8e <A7105_SetPower+0x8e>
+  48:	2300      	movs	r3, #0
+  4a:	73fb      	strb	r3, [r7, #15]
+  4c:	2302      	movs	r3, #2
+  4e:	73bb      	strb	r3, [r7, #14]
+  50:	e01d      	b.n	8e <A7105_SetPower+0x8e>
+  52:	2300      	movs	r3, #0
+  54:	73fb      	strb	r3, [r7, #15]
+  56:	2304      	movs	r3, #4
+  58:	73bb      	strb	r3, [r7, #14]
+  5a:	e018      	b.n	8e <A7105_SetPower+0x8e>
+  5c:	2301      	movs	r3, #1
+  5e:	73fb      	strb	r3, [r7, #15]
+  60:	2305      	movs	r3, #5
+  62:	73bb      	strb	r3, [r7, #14]
+  64:	e013      	b.n	8e <A7105_SetPower+0x8e>
+  66:	2302      	movs	r3, #2
+  68:	73fb      	strb	r3, [r7, #15]
+  6a:	2307      	movs	r3, #7
+  6c:	73bb      	strb	r3, [r7, #14]
+  6e:	e00e      	b.n	8e <A7105_SetPower+0x8e>
+  70:	2303      	movs	r3, #3
+  72:	73fb      	strb	r3, [r7, #15]
+  74:	2307      	movs	r3, #7
+  76:	73bb      	strb	r3, [r7, #14]
+  78:	e009      	b.n	8e <A7105_SetPower+0x8e>
+  7a:	2303      	movs	r3, #3
+  7c:	73fb      	strb	r3, [r7, #15]
+  7e:	2307      	movs	r3, #7
+  80:	73bb      	strb	r3, [r7, #14]
+  82:	e004      	b.n	8e <A7105_SetPower+0x8e>
+  84:	2300      	movs	r3, #0
+  86:	73fb      	strb	r3, [r7, #15]
+  88:	2300      	movs	r3, #0
+  8a:	73bb      	strb	r3, [r7, #14]
+  8c:	bf00      	nop
+  8e:	7bfb      	ldrb	r3, [r7, #15]
+  90:	00db      	lsls	r3, r3, #3
+  92:	b2da      	uxtb	r2, r3
+  94:	7bbb      	ldrb	r3, [r7, #14]
+  96:	4313      	orrs	r3, r2
+  98:	b2db      	uxtb	r3, r3
+  9a:	b2db      	uxtb	r3, r3
+  9c:	2028      	movs	r0, #40	; 0x28
+  9e:	4619      	mov	r1, r3
+  a0:	f7ff fffe 	bl	0 <A7105_SetPower>
+  a4:	3710      	adds	r7, #16
+  a6:	46bd      	mov	sp, r7
+  a8:	bd80      	pop	{r7, pc}
+  aa:	bf00      	nop
+
+Disassembly of section .text.A7105_Strobe:
+
+00000000 <A7105_Strobe>:
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+   a:	f7ff fffe 	bl	0 <A7105_Strobe>
+   e:	79fb      	ldrb	r3, [r7, #7]
+  10:	b29b      	uxth	r3, r3
+  12:	4804      	ldr	r0, [pc, #16]	; (24 <A7105_Strobe+0x24>)
+  14:	4619      	mov	r1, r3
+  16:	f7ff fffe 	bl	0 <spi_xfer>
+  1a:	f7ff fffe 	bl	0 <A7105_Strobe>
+  1e:	3708      	adds	r7, #8
+  20:	46bd      	mov	sp, r7
+  22:	bd80      	pop	{r7, pc}
+  24:	40003800 	.word	0x40003800
